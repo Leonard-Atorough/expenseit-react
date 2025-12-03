@@ -1,6 +1,6 @@
 # expenseit-react
 
-ExpenseIt React is a sample application that demonstrates how to build a simple expense tracking app using React. This application allows users to add, view, and manage their expenses in a user-friendly interface. It is a migration of the original ExpenseIt application built with Typescript and Native DOM manipulation [link to original repo](https://github.com/Leonard-Atorough/ExpenseIt-API).
+ExpenseIt React is a sample application that demonstrates how to build a simple expense tracking app using React. This application allows users to add, view, and manage their expenses in a user-friendly interface. It is a migration of the original ExpenseIt application built with Typescript and Native DOM manipulation [link to original repo](https://github.com/Leonard-Atorough/expenseit-project).
 
 ## Roadmap
 
