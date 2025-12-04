@@ -1,11 +1,14 @@
-
+import { Outlet } from "react-router";
 import "./App.css";
+import AuthProvider from "./providers/AuthProvider";
 
 function App() {
   return (
-    <>
-      <div>Placeholder text</div>
-    </>
+    <AuthProvider>
+      <div className="App">
+        <Outlet />
+      </div>
+    </AuthProvider>
   );
 }
 
