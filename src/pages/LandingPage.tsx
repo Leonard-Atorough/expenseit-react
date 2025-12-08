@@ -1,11 +1,11 @@
-import { LandingAppBar } from "../components/landing/LandingAppBar";
+import { Features } from "../components/landing/Features";
 import { Hero } from "../components/landing/Hero";
 
 export function LandingPage() {
   return (
     <>
-      <LandingAppBar />
       <Hero />
+      <Features />
     </>
   );
 }

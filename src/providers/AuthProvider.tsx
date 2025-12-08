@@ -16,13 +16,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
 
       try {
-        const response = await fetch("https://localhost:4000/api/auth/login", {
+        const response = await fetch("http://localhost:4000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "User-Agent": "ExpenseIt-Client", // Need to see about sending user-agent from browser
             "X-Forwarded-For": "127.0.0.1", // Placeholder for client IP, research how to get real IP
           },
+          credentials: "include",
           body: JSON.stringify(credentials),
         });
 
@@ -34,7 +35,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         const data = (await response.json()) as { user: userData; accessToken: string };
 
-        setIsLoading(false);
         setUser(data.user);
         setAccessToken(data.accessToken);
         setIsLoggedIn(true);
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
 
       try {
-        const response = await fetch("https://localhost:4000/api/auth/register", {
+        const response = await fetch("http://localhost:4000/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -79,7 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user);
 
         setIsLoggedIn(true);
-        setIsLoading(false);
       } catch (error) {
         console.error(
           "Registration failed:",
@@ -90,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
       }
     },
-    [isLoggedIn, setIsLoading, setUser, setIsLoggedIn]
+    [isLoggedIn]
   );
 
   const logout = useCallback(async () => {
@@ -99,12 +98,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://localhost:4000/api/auth/logout", {
+      console.log("Document cookies:", document.cookie);
+      const response = await fetch("http://localhost:4000/api/auth/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -116,18 +117,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const data = (await response.json()) as { message: string };
       console.log(data.message);
-
-      setUser(null);
-      setAccessToken(null);
-      setIsLoggedIn(false);
-      setIsLoading(false);
     } catch (error) {
       console.error("Logout failed:", error instanceof Error ? error.message : String(error));
       throw error;
     } finally {
       setIsLoading(false);
+      setUser(null);
+      setAccessToken(null);
+      setIsLoggedIn(false);
     }
-  }, [isLoggedIn, accessToken, setUser, setAccessToken, setIsLoggedIn, setIsLoading]);
+  }, [isLoggedIn, accessToken]);
 
   return (
     <AuthContext.Provider

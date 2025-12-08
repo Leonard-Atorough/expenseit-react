@@ -8,11 +8,19 @@ import Container from "@mui/material/Container";
 import InputLabel from "@mui/material/InputLabel";
 import { useState } from "react";
 import { useAuth } from "../../hooks/Auth";
+import { useNavigate } from "react-router";
 
 export function LoginOrRegister() {
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const auth = useAuth();
+  const navigate = useNavigate();
+
+  const displayErrorForTime = (message: string, duration: number) => {
+    setError(message);
+    setTimeout(() => setError(null), duration);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,10 +30,13 @@ export function LoginOrRegister() {
     const password = data.get("password") as string;
     if (isLoginMode) {
       try {
+        console.log("Attempting login for:", email);
         await auth.login({ email, password });
         // Successful login actions can be handled here, e.g., redirecting the user
+        await navigate("/user/dashboard");
       } catch (error) {
         console.error("Login error:", error);
+        displayErrorForTime(error instanceof Error ? error.message : String(error), 5000);
         // Optionally, display an error message to the user
       }
     } else {
@@ -34,6 +45,7 @@ export function LoginOrRegister() {
       try {
         await auth.register({ firstName, lastName, email, password });
         // Successful registration actions can be handled here, e.g., redirecting the user
+        await navigate("/login");
       } catch (error) {
         console.error("Registration error:", error);
         // Optionally, display an error message to the user
@@ -42,8 +54,14 @@ export function LoginOrRegister() {
   };
 
   return (
-    // MUI heirarchy: Container > Paper > Box > Typography + Box(form) > Grid > TextFields, Buttons
     <Container maxWidth="sm" component="main" sx={{ marginTop: 8 }}>
+      {error && (
+        <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+          <Typography color="error" align="center" sx={{ mb: 2 }}>
+            {error}
+          </Typography>
+        </Paper>
+      )}
       <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography component="h1" variant="h5">
