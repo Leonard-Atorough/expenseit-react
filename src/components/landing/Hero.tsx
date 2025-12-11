@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
+import heroBg from "../../assets/hero_bg.jpg";
 
 export function Hero() {
   // Hero section props
@@ -10,7 +11,7 @@ export function Hero() {
     title: "Welcome to ExpenseIt",
     subtitle:
       "Join us today and take control of your finances! Manage your expenses effortlessly and stay on top of your budget.",
-    bgImage: "/src/assets/hero_bg.jpg",
+    bgImage: heroBg,
   };
 
   return (
