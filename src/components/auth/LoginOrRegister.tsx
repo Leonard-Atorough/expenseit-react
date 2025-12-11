@@ -8,7 +8,7 @@ import Container from "@mui/material/Container";
 import InputLabel from "@mui/material/InputLabel";
 import { useState } from "react";
 import { useAuth } from "../../hooks/Auth";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 export function LoginOrRegister() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -16,6 +16,10 @@ export function LoginOrRegister() {
 
   const auth = useAuth();
   const navigate = useNavigate();
+
+  useOutletContext<{ setPage: (page: string | undefined) => void }>().setPage(
+    isLoginMode ? "LOGIN" : "REGISTER"
+  );
 
   const displayErrorForTime = (message: string, duration: number) => {
     setError(message);

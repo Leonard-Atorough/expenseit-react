@@ -16,6 +16,7 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../hooks/Auth";
+import { use, useState } from "react";
 
 const drawerWidth = 240;
 
@@ -23,6 +24,8 @@ export function UserPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+
+  const [page, setPage] = useState<string | undefined>(undefined);
 
   const menuItems = [
     { text: "Dashboard", icon: <DashboardIcon />, path: "/user/dashboard" },
@@ -46,7 +49,7 @@ export function UserPage() {
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            ExpenseIt
+            {`EXPENSEIT ${page ? `| ${page}` : ""}`}
           </Typography>
           <Typography variant="body1" sx={{ mr: 2 }}>
             {user?.firstName} {user?.lastName}
@@ -90,7 +93,7 @@ export function UserPage() {
       {/* Main Content */}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        <Outlet />
+        <Outlet context={{ setPage }} />
       </Box>
     </Box>
   );
