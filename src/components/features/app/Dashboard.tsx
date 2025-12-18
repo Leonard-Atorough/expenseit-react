@@ -10,44 +10,44 @@ export function Dashboard() {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom sx={{ mb: 3 }}>
         Welcome back, {user?.firstName}!
       </Typography>
 
-      <Grid container spacing={3} sx={{ mt: 2 }}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="h6" color="text.secondary" sx={{ textTransform: "uppercase", fontSize: "12px" }}>
               Total Balance
             </Typography>
-            <Typography variant="h4" sx={{ mt: 2 }}>
+            <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>
               $0.00
             </Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="h6" color="text.secondary" sx={{ textTransform: "uppercase", fontSize: "12px" }}>
               This Month
             </Typography>
-            <Typography variant="h4" sx={{ mt: 2 }}>
+            <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>
               $0.00
             </Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="h6" color="text.secondary" sx={{ textTransform: "uppercase", fontSize: "12px" }}>
               Transactions
             </Typography>
-            <Typography variant="h4" sx={{ mt: 2 }}>
+            <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>
               0
             </Typography>
           </Paper>
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 3 }}>
         <Typography variant="h5" gutterBottom>
           Recent Transactions
         </Typography>

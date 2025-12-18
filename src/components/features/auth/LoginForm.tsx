@@ -14,26 +14,26 @@ interface LoginFormProps {
 
 export function LoginForm({ isLoginMode, onSubmit, onToggleMode }: LoginFormProps) {
   return (
-    <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
+    <Paper elevation={3} sx={{ p: 4, mt: 8 }}>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4" sx={{ mb: 3 }}>
           {isLoginMode ? "Login" : "Register"}
         </Typography>
-        <Box component="form" width="100%" sx={{ mt: 3 }} onSubmit={(e) => void onSubmit(e)}>
+        <Box component="form" width="100%" sx={{ mt: 2 }} onSubmit={(e) => void onSubmit(e)}>
           <Grid container spacing={2}>
             {!isLoginMode && (
               <>
-                <Grid size={{ xs: 12, sm: 6 }} mt={2}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <InputLabel htmlFor="firstName">First Name</InputLabel>
                   <TextField name="firstName" required fullWidth id="firstName" autoFocus />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6 }} mt={2}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <InputLabel htmlFor="lastName">Last Name</InputLabel>
                   <TextField required fullWidth id="lastName" name="lastName" />
                 </Grid>
               </>
             )}
-            <Grid size={{ xs: 12 }} mt={2}>
+            <Grid size={{ xs: 12 }}>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <TextField
                 required
@@ -44,7 +44,7 @@ export function LoginForm({ isLoginMode, onSubmit, onToggleMode }: LoginFormProp
                 placeholder="your@email.com"
               />
             </Grid>
-            <Grid size={{ xs: 12 }} mt={2}>
+            <Grid size={{ xs: 12 }}>
               <InputLabel htmlFor="password">Password</InputLabel>
               <TextField
                 required
@@ -55,8 +55,8 @@ export function LoginForm({ isLoginMode, onSubmit, onToggleMode }: LoginFormProp
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid size={{ xs: 12 }} mt={2}>
-              <Button type="submit" fullWidth variant="contained">
+            <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
+              <Button type="submit" fullWidth variant="contained" color="primary" size="large">
                 {isLoginMode ? "Login" : "Register"}
               </Button>
             </Grid>
@@ -65,7 +65,7 @@ export function LoginForm({ isLoginMode, onSubmit, onToggleMode }: LoginFormProp
                 fullWidth
                 variant="text"
                 onClick={onToggleMode}
-                sx={{ textTransform: "capitalize" }}
+                sx={{ textTransform: "capitalize", color: "text.secondary" }}
               >
                 {isLoginMode ? "New here? Register" : "Already have an account? Login"}
               </Button>

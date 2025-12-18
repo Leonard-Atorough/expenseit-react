@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 export function Reports() {
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Reports
       </Typography>
 

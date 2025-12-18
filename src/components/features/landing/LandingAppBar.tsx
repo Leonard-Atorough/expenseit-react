@@ -8,7 +8,7 @@ export function LandingAppBar({ page }: { page: string | undefined }) {
       brand="EXPENSEIT"
       pageTitle={page}
       rightContent={
-        <Button color="inherit" sx={{ fontWeight: "700" }} component={Link} to="/login">
+        <Button color="inherit" sx={{ fontWeight: "600" }} component={Link} to="/login">
           Login
         </Button>
       }

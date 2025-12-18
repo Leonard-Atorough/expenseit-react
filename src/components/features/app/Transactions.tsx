@@ -9,8 +9,8 @@ export function Transactions() {
   return (
     <Container maxWidth="lg">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4">Transactions</Typography>
-        <Button variant="contained" startIcon={<AddIcon />}>
+        <Typography variant="h3">Transactions</Typography>
+        <Button variant="contained" color="primary" startIcon={<AddIcon />}>
           Add Transaction
         </Button>
       </Box>

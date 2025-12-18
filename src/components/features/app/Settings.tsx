@@ -11,7 +11,7 @@ export function Settings() {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Settings
       </Typography>
 

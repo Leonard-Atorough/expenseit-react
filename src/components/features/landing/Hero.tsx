@@ -44,9 +44,10 @@ export function Hero() {
         </Stack>
         <Button
           variant="contained"
+          color="primary"
           size="large"
           href="/login"
-          sx={{ fontWeight: "500", px: 4, py: 1.5, fontSize: "1.25rem" }}
+          sx={{ fontWeight: "600", px: 4, py: 1.5 }}
         >
           Get Started
         </Button>
