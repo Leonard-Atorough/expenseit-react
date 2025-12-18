@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 import {useState} from "react";
 import "./App.css";
 import AuthProvider from "./providers/AuthProvider";
-import { LandingAppBar } from "./components/LandingAppBar";
+import { LandingAppBar } from "./components/features/landing";
 
 function App() {
   const [page, setPage] = useState<string | undefined>(undefined);

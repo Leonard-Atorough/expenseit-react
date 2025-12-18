@@ -1,6 +1,5 @@
 import { useOutletContext } from "react-router";
-import { Features } from "../components/landing/Features";
-import { Hero } from "../components/landing/Hero";
+import { Features, Hero } from "../components/features/landing";
 
 export function LandingPage() {
   useOutletContext<{ setPage: (page: string | undefined) => void }>().setPage("HOME");

@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import heroBg from "../../assets/hero_bg.jpg";
+import heroBg from "../../../assets/hero_bg.jpg";
 
 export function Hero() {
   // Hero section props

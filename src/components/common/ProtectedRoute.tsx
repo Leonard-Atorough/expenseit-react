@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useAuth } from "../hooks/Auth";
+import { useAuth } from "../../hooks/Auth";
 import { CircularProgress, Box } from "@mui/material";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -9,7 +9,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
-      navigate("/login", { replace: true });
+      void navigate("/login", { replace: true });
     }
   }, [isLoggedIn, isLoading, navigate]);
 

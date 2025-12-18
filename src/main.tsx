@@ -7,13 +7,10 @@ import App from "./App.tsx";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme/index.ts";
 import { CssBaseline } from "@mui/material";
-import { LoginOrRegister } from "./components/auth/LoginOrRegister.tsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
+import { LoginOrRegisterPage } from "./pages/LoginOrRegisterPage";
+import { ProtectedRoute } from "./components/common";
 import { UserPage } from "./pages/UserPage.tsx";
-import { Dashboard } from "./components/Dashboard.tsx";
-import { Transactions } from "./components/Transactions.tsx";
-import { Reports } from "./components/Reports.tsx";
-import { Settings } from "./components/Settings.tsx";
+import { Dashboard, Transactions, Reports, Settings } from "./components/features/app";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +18,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "login", element: <LoginOrRegister /> },
+      { path: "login", element: <LoginOrRegisterPage /> },
       {
         path: "user",
         element: (
