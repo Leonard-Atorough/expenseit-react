@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 import type { userData } from "../types";
 import { AuthContext } from "../context/AuthContext";
 
@@ -8,6 +8,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<userData | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      setIsLoading(true);
+      try {
+        const token = localStorage.getItem("accessToken");
+
+        if (token && !isTokenExpired(token)) {
+          setAccessToken(token);
+          setIsLoggedIn(true);
+          // Optionally, fetch user data here using the token
+          const user = await fetch("http://localhost:3001/auth/me", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+          });
+          if (user.ok) {
+            const userData = (await user.json()) as userData;
+            setUser(userData);
+          }
+        } else {
+          setIsLoggedIn(false);
+          setUser(null);
+          setAccessToken(null);
+          localStorage.removeItem("accessToken");
+        }
+      } catch (error) {
+        console.error("Error checking auth status:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void checkAuthStatus();
+  }, []);
+
   // Things we need to implement: login, register, logout functions
   const login = useCallback(
     async (credentials: { email: string; password: string }) => {
@@ -16,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
 
       try {
-        const response = await fetch("http://localhost:4000/api/auth/login", {
+        const response = await fetch("http://localhost:3001/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -36,6 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const data = (await response.json()) as { user: userData; accessToken: string };
 
         setUser(data.user);
+        localStorage.setItem("accessToken", data.accessToken);
         setAccessToken(data.accessToken);
         setIsLoggedIn(true);
       } catch (error) {
@@ -60,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
 
       try {
-        const response = await fetch("http://localhost:4000/api/auth/register", {
+        const response = await fetch("http://localhost:3001/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -74,10 +113,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             "message" in errorData ? errorData.message : "Registration failed for unknown reasons."
           );
         }
-        const data = (await response.json()) as { user: userData };
+        const data = (await response.json()) as { user: userData; accessToken: string };
 
         setUser(data.user);
-
+        localStorage.setItem("accessToken", data.accessToken);
+        setAccessToken(data.accessToken);
         setIsLoggedIn(true);
       } catch (error) {
         console.error(
@@ -99,7 +139,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       console.log("Document cookies:", document.cookie);
-      const response = await fetch("http://localhost:4000/api/auth/logout", {
+      const response = await fetch("http://localhost:3001/auth/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,6 +163,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
       setUser(null);
+      localStorage.removeItem("accessToken");
       setAccessToken(null);
       setIsLoggedIn(false);
     }
@@ -143,6 +184,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+function isTokenExpired(token: string): boolean {
+  try {
+    const payloadBase64 = token.split(".")[1];
+    const payloadJson = atob(payloadBase64);
+    const payload = JSON.parse(payloadJson) as { exp: number };
+    const currentTime = Math.floor(Date.now() / 1000);
+    return payload.exp < currentTime;
+  } catch (error) {
+    console.error("Error checking token expiration:", error);
+    return true;
+  }
 }
 
 export default AuthProvider;

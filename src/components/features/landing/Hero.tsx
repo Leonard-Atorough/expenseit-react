@@ -38,7 +38,7 @@ export function Hero() {
           <Typography variant="h1" component="h2" gutterBottom>
             {props.title}
           </Typography>
-          <Typography variant="h5" component="h3">
+          <Typography variant="h3" component="h3">
             {props.subtitle}
           </Typography>
         </Stack>

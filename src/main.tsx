@@ -1,6 +1,6 @@
-import { StrictMode } from "react";
+import { StrictMode, use } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import { LandingPage } from "./pages/LandingPage.tsx";
 import "./index.css";
 import App from "./App.tsx";
@@ -11,6 +11,7 @@ import { LoginOrRegisterPage } from "./pages/LoginOrRegisterPage";
 import { ProtectedRoute } from "./components/common";
 import { UserPage } from "./pages/UserPage.tsx";
 import { Dashboard, Transactions, Reports, Settings } from "./components/features/app";
+import { useAuth } from "./hooks/Auth.ts";
 
 const router = createBrowserRouter([
   {

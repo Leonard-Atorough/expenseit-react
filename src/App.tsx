@@ -1,18 +1,21 @@
 import { Outlet } from "react-router";
-import {useState} from "react";
+import { useState } from "react";
+import Box from "@mui/material/Box";
 import "./App.css";
 import AuthProvider from "./providers/AuthProvider";
-import { LandingAppBar } from "./components/features/landing";
+import { Header } from "./components/common";
 
 function App() {
   const [page, setPage] = useState<string | undefined>(undefined);
 
   return (
     <AuthProvider>
-      <div className="App">
-        <LandingAppBar page={page} />
-        <Outlet context={{ setPage }} />
-      </div>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+        <Header pageTitle={page} />
+        <Box sx={{ flex: 1, overflow: "hidden" }}>
+          <Outlet context={{ setPage }} />
+        </Box>
+      </Box>
     </AuthProvider>
   );
 }

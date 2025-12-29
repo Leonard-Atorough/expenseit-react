@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/Auth";
 import { useNavigate, useOutletContext } from "react-router";
 import { ErrorAlert } from "../components/common";
@@ -12,9 +12,17 @@ export function LoginOrRegisterPage() {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  useOutletContext<{ setPage: (page: string | undefined) => void }>().setPage(
-    isLoginMode ? "LOGIN" : "REGISTER"
-  );
+  const { setPage } = useOutletContext<{ setPage: (page: string | undefined) => void }>();
+
+  useEffect(() => {
+    setPage(isLoginMode ? "LOGIN" : "REGISTER");
+  }, [isLoginMode, setPage]);
+
+  useEffect(() => {
+    if (auth.isLoggedIn) {
+      void navigate("/user/dashboard");
+    }
+  }, [auth.isLoggedIn, navigate]);
 
   const displayErrorForTime = (message: string, duration: number) => {
     setError(message);
