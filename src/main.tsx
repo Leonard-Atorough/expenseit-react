@@ -1,6 +1,6 @@
-import { StrictMode, use } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, redirect, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { LandingPage } from "./pages/LandingPage.tsx";
 import "./index.css";
 import App from "./App.tsx";
@@ -11,7 +11,6 @@ import { LoginOrRegisterPage } from "./pages/LoginOrRegisterPage";
 import { ProtectedRoute } from "./components/common";
 import { UserPage } from "./pages/UserPage.tsx";
 import { Dashboard, Transactions, Reports, Settings } from "./components/features/app";
-import { useAuth } from "./hooks/Auth.ts";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +29,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Dashboard /> },
           { path: "dashboard", element: <Dashboard /> },
-          { path: "transactions", element: <Transactions /> },
+          { path: "transactions", element: <Transactions transactions={[]} /> },
           { path: "reports", element: <Reports /> },
           { path: "settings", element: <Settings /> },
         ],
@@ -45,5 +44,5 @@ createRoot(document.getElementById("root")!).render(
       <CssBaseline />
       <RouterProvider router={router} />
     </ThemeProvider>
-  </StrictMode>
+  </StrictMode>,
 );

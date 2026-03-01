@@ -1,17 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext } from "react";
-import type { loginCredentials, registerCredentials, userData } from "../types";
+import type { loginCredentials, registerCredentials } from "../types";
+import type { authContextType } from "../providers/AuthProvider";
 
-export const AuthContext = createContext<{
-  user?: userData | null;
-  accessToken?: string | null;
-  isLoading: boolean;
-  isLoggedIn: boolean;
-  login: (credentials: loginCredentials) => Promise<void>;
-  register: (credentials: registerCredentials) => Promise<void>;
-  logout: () => Promise<void>;
-}>({
+export const AuthContext = createContext<authContextType>({
   isLoading: false,
   isLoggedIn: false,
   accessToken: null,
@@ -19,4 +12,5 @@ export const AuthContext = createContext<{
   login: async (_: loginCredentials) => {},
   register: async (_: registerCredentials) => {},
   logout: async () => {},
+  refresh: async () => {},
 });

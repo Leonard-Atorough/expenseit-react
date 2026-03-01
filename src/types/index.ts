@@ -16,3 +16,25 @@ export interface userData {
   lastName: string;
   email: string;
 }
+
+export interface ApiResponse<T> {
+  message: string;
+  data?: T;
+}
+
+export interface ApiConfig {
+  apiBaseUrl: string;
+  endpoints: {
+    auth: {
+      login: string;
+      register: string;
+      me: string;
+      logout: string;
+      refresh: string;
+    };
+    user: {
+      profile: string;
+    };
+  };
+  defaultHeaders: Record<string, string>;
+}

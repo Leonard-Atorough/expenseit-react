@@ -1,6 +1,18 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import type { userData } from "../types";
+import type { loginCredentials, registerCredentials, userData } from "../types";
 import { AuthContext } from "../context/AuthContext";
+import { getCurrentUser, loginUser, logoutUser, refreshToken, registerUser } from "../api/services/authService";
+
+export interface authContextType {
+  isLoggedIn: boolean;
+  isLoading: boolean;
+  user: userData | null;
+  accessToken: string | null;
+  login: (credentials: loginCredentials) => Promise<void>;
+  register: (credentials: registerCredentials) => Promise<void>;
+  logout: () => Promise<void>;
+  refresh: () => Promise<void>;
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,19 +29,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (token && !isTokenExpired(token)) {
           setAccessToken(token);
           setIsLoggedIn(true);
-          // Optionally, fetch user data here using the token
-          const user = await fetch("http://localhost:3001/auth/me", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            credentials: "include",
-          });
-          if (user.ok) {
-            const userData = (await user.json()) as userData;
-            setUser(userData);
-          }
+          const user = await getCurrentUser(token);
+          setUser(user);
         } else {
           setIsLoggedIn(false);
           setUser(null);
@@ -48,34 +49,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Things we need to implement: login, register, logout functions
   const login = useCallback(
-    async (credentials: { email: string; password: string }) => {
+    async (credentials: loginCredentials) => {
       if (isLoggedIn) return;
 
       setIsLoading(true);
 
       try {
-        const response = await fetch("http://localhost:3001/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "ExpenseIt-Client", // Need to see about sending user-agent from browser
-            "X-Forwarded-For": "127.0.0.1", // Placeholder for client IP, research how to get real IP
-          },
-          credentials: "include",
-          body: JSON.stringify(credentials),
-        });
-
-        if (!response.ok) {
-          const errorData = (await response.json()) as { message: string };
-          throw new Error(
-            "message" in errorData ? errorData.message : "Login failed for unknown reasons."
-          );
-        }
-        const data = (await response.json()) as { user: userData; accessToken: string };
-
+        const data = await loginUser(credentials);
         setUser(data.user);
+
         localStorage.setItem("accessToken", data.accessToken);
         setAccessToken(data.accessToken);
+
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Login failed:", error instanceof Error ? error.message : String(error));
@@ -84,52 +69,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
       }
     },
-    [isLoggedIn]
+    [isLoggedIn],
   );
 
   const register = useCallback(
-    async (credentials: {
-      firstName: string;
-      lastName: string;
-      email: string;
-      password: string;
-    }) => {
+    async (credentials: registerCredentials) => {
       if (isLoggedIn) return;
 
       setIsLoading(true);
 
       try {
-        const response = await fetch("http://localhost:3001/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        });
+        const data = await registerUser(credentials);
 
-        if (!response.ok) {
-          const errorData = (await response.json()) as { message: string };
-          throw new Error(
-            "message" in errorData ? errorData.message : "Registration failed for unknown reasons."
-          );
-        }
-        const data = (await response.json()) as { user: userData; accessToken: string };
-
-        setUser(data.user);
-        localStorage.setItem("accessToken", data.accessToken);
-        setAccessToken(data.accessToken);
-        setIsLoggedIn(true);
+        setUser(data);
       } catch (error) {
         console.error(
           "Registration failed:",
-          error instanceof Error ? error.message : String(error)
+          error instanceof Error ? error.message : String(error),
         );
         throw error;
       } finally {
         setIsLoading(false);
       }
     },
-    [isLoggedIn]
+    [isLoggedIn],
   );
 
   const logout = useCallback(async () => {
@@ -138,25 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
 
     try {
-      console.log("Document cookies:", document.cookie);
-      const response = await fetch("http://localhost:3001/auth/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        const errorData = (await response.json()) as { message: string };
-        throw new Error(
-          "message" in errorData ? errorData.message : "Logout failed for unknown reasons."
-        );
-      }
-
-      const data = (await response.json()) as { message: string };
-      console.log(data.message);
+      await logoutUser(accessToken!);
     } catch (error) {
       console.error("Logout failed:", error instanceof Error ? error.message : String(error));
       throw error;
@@ -166,6 +111,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem("accessToken");
       setAccessToken(null);
       setIsLoggedIn(false);
+    }
+  }, [isLoggedIn, accessToken]);
+
+  const refresh = useCallback(async () => {
+    if (!isLoggedIn) return;
+
+    setIsLoading(true);
+
+    try {
+      const data = await refreshToken(accessToken!);
+
+      localStorage.setItem("accessToken", data.accessToken);
+      setAccessToken(data.accessToken);
+    } catch (error) {
+      console.error(
+        "Token refresh failed:",
+        error instanceof Error ? error.message : String(error),
+      );
+      throw error;
+    } finally {
+      setIsLoading(false);
     }
   }, [isLoggedIn, accessToken]);
 
@@ -179,6 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         register,
         logout,
+        refresh,
       }}
     >
       {children}
