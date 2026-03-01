@@ -28,10 +28,10 @@ export function AppSidebar({ menuItems }: AppSidebarProps) {
   const location = useLocation();
 
   const defaultMenuItems: MenuItem[] = [
-    { text: "Dashboard", icon: <DashboardIcon />, path: "/user/dashboard" },
-    { text: "Transactions", icon: <ReceiptIcon />, path: "/user/transactions" },
-    { text: "Reports", icon: <AssessmentIcon />, path: "/user/reports" },
-    { text: "Settings", icon: <SettingsIcon />, path: "/user/settings" },
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/app/dashboard" },
+    { text: "Transactions", icon: <ReceiptIcon />, path: "/app/transactions" },
+    { text: "Reports", icon: <AssessmentIcon />, path: "/app/reports" },
+    { text: "Settings", icon: <SettingsIcon />, path: "/app/settings" },
   ];
 
   const items = menuItems ?? defaultMenuItems;

@@ -20,6 +20,7 @@ export function Features() {
         alignItems: "center",
         justifyContent: "center",
       }}
+      id="features"
     >
       <Container maxWidth="lg" sx={{ mb: 6 }}>
         <Typography variant="h2" component="h2" gutterBottom align="center">
@@ -47,7 +48,10 @@ export function Features() {
           justifyContent="center"
           gap={4}
         >
-          <Card sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }} elevation={3}>
+          <Card
+            sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }}
+            elevation={3}
+          >
             <Typography variant="h5" component="h3" gutterBottom>
               Expense Tracking
             </Typography>
@@ -55,7 +59,10 @@ export function Features() {
               Track your income and expenses effortlessly to stay on top of your financial health.
             </Typography>
           </Card>
-          <Card sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }} elevation={3}>
+          <Card
+            sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }}
+            elevation={3}
+          >
             <Typography variant="h5" component="h3" gutterBottom>
               Analytics and Charts
             </Typography>
@@ -63,7 +70,10 @@ export function Features() {
               Visualize your spending patterns with interactive charts and detailed analytics.
             </Typography>
           </Card>
-          <Card sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }} elevation={3}>
+          <Card
+            sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }}
+            elevation={3}
+          >
             <Typography variant="h5" component="h3" gutterBottom>
               Budgeting Tools
             </Typography>

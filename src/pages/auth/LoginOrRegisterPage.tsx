@@ -1,9 +1,9 @@
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate, useOutletContext } from "react-router";
-import { ErrorAlert } from "../components/common";
-import { LoginForm } from "../components/features/auth";
+import { ErrorAlert } from "../../components/common";
+import { LoginForm } from "../../components/features/auth";
 
 export function LoginOrRegisterPage() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -20,7 +20,7 @@ export function LoginOrRegisterPage() {
 
   useEffect(() => {
     if (auth.isLoggedIn) {
-      void navigate("/user/dashboard");
+      void navigate("/app/dashboard");
     }
   }, [auth.isLoggedIn, navigate]);
 
@@ -41,7 +41,7 @@ export function LoginOrRegisterPage() {
           console.log("Attempting login for:", email);
           await auth.login({ email, password });
           // Successful login actions can be handled here, e.g., redirecting the user
-          await navigate("/user/dashboard");
+          await navigate("/app/dashboard");
         } catch (error) {
           console.error("Login error:", error);
           displayErrorForTime(error instanceof Error ? error.message : String(error), 5000);

@@ -20,10 +20,6 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
       </Box>
     );
   }
-
-  if (!isLoggedIn) {
-    return null;
-  }
-
+  
   return <>{children}</>;
 }
