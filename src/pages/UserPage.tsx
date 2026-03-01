@@ -1,6 +1,6 @@
 import { Outlet, useOutletContext } from "react-router";
 import Box from "@mui/material/Box";
-import { useAuth } from "../hooks/Auth";
+import { useAuth } from "../hooks/useAuth";
 import { AppSidebar, DRAWER_WIDTH } from "../components/features/app";
 import { useCallback, useEffect, useState } from "react";
 import type { Transaction } from "../models/TransactionModel";

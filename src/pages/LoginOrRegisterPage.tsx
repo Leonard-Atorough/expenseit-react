@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/Auth";
+import { useAuth } from "../hooks/useAuth";
 import { useNavigate, useOutletContext } from "react-router";
 import { ErrorAlert } from "../components/common";
 import { LoginForm } from "../components/features/auth";

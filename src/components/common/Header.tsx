@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../../hooks/Auth";
+import { useAuth } from "../../hooks/useAuth";
 import { AppBarContainer } from "./AppBarContainer";
 import type { SxProps, Theme } from "@mui/material";
 
