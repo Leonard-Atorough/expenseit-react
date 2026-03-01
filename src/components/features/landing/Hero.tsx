@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import heroBg from "../../../assets/hero_bg.jpg";
+import heroBg from "../../../assets/hero.jpg";
 
 export function Hero() {
   // Hero section props
@@ -20,25 +20,39 @@ export function Hero() {
         maxWidth={false}
         sx={{
           width: "100%",
-          textAlign: "center",
+          textAlign: "right",
           py: 8,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "80vh",
+          alignItems: "flex-end",
+          justifyContent: "flex-start",
+          minHeight: "100vh",
           backgroundImage: `url(${props.bgImage})`,
           backgroundSize: "cover",
           backgroundPosition: "0% 50%",
-          color: "#fff",
-          boxShadow: "inset 0 0 0 1000px rgba(0, 0, 0, 0.35)",
         }}
       >
-        <Stack spacing={4} mb={4} alignItems="center">
-          <Typography variant="h1" component="h2" gutterBottom>
+        <Stack spacing={4} mb={4} alignItems="flex-end">
+          <Typography
+            variant="h1"
+            component="h2"
+            gutterBottom
+            sx={{ fontSize: { xs: "2rem", sm: "3rem", md: "5rem" } }}
+          >
             {props.title}
           </Typography>
-          <Typography variant="h3" component="h3">
+          <Typography
+            variant="h3"
+            component="h3"
+            sx={{
+              fontSize: { xs: "1rem", sm: "1.5rem", md: "2rem" },
+              maxWidth: { xs: "90%", sm: "80%", md: "600px" },
+              lineClamp: 2,
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
             {props.subtitle}
           </Typography>
         </Stack>

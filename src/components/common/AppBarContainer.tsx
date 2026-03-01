@@ -1,35 +1,46 @@
-import type { SxProps, Theme } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
+import {  type SxProps, type Theme, AppBar as MuiAppBar } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { Link } from "react-router";
+import type { ReactNode } from "react";
 
 interface AppBarContainerProps {
-  brand?: string;
-  pageTitle?: string;
-  rightContent?: React.ReactNode;
   position?: "absolute" | "fixed" | "relative" | "static" | "sticky";
+  children: ReactNode;
   sx?: SxProps<Theme>;
 }
 
-export function AppBarContainer({
-  brand = "EXPENSEIT",
-  pageTitle,
-  rightContent,
-  position = "relative",
-  sx,
-}: AppBarContainerProps) {
+/**
+ * Flexible header container for any header content (MainHeader, AppHeader, etc.)
+ * Provides consistent responsive spacing and layout structure without enforcing content structure.
+ *
+ * Usage:
+ * <AppBarContainer>
+ *   <YourHeaderContent />
+ * </AppBarContainer>
+ */
+export function AppBarContainer({ position = "sticky", children, sx }: AppBarContainerProps) {
   return (
-    <AppBar position={position} sx={{ px: 3, py: 0.5, zIndex: (theme) => theme.zIndex.drawer + 2, ...sx }}>
-      <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <Typography variant="h1" component="h1" sx={{ fontWeight: "700" }}>
-            {`${brand}${pageTitle ? ` | ${pageTitle}` : ""}`}
-          </Typography>
-        </Link>
-        {rightContent && <Box>{rightContent}</Box>}
+    <MuiAppBar
+      position={position}
+      elevation={1}
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: "background.paper",
+        ...sx,
+      }}
+    >
+      <Toolbar
+        sx={{
+          minHeight: { xs: "56px", sm: "64px" },
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 0.5, sm: 1, md: 2 },
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 2,
+        }}
+      >
+        {children}
       </Toolbar>
-    </AppBar>
+    </MuiAppBar>
   );
 }

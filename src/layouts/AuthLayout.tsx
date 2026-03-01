@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { MainHeader } from "../components";
 import { Outlet } from "react-router";
 import { useEffect, useState } from "react";
@@ -11,9 +11,9 @@ export function AuthLayout() {
   }, [page]);
   
   return (
-    <Container>
+    <Box sx={{ width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column", p: 0 }}>
       <MainHeader />
       <Outlet context={{ setPage }} />
-    </Container>
+    </Box>
   );
 }

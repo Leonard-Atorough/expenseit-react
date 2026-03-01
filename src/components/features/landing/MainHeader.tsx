@@ -1,54 +1,72 @@
-// Using mui for styling and components. Styling a header with  a title (no subtitle), some jump links and a login/signup button.
-import { Box, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router";
-import { AppBarContainerCopy } from "../../common/AppBarContainer copy";
+import { AppBarContainer } from "../../common/AppBarContainer";
 
 export function MainHeader() {
   return (
-    <AppBarContainerCopy
-    pageTitle="Welcome to ExpenseIt"
+    <AppBarContainer
       position="static"
-      sx={{ borderBottom: "1px solid #e0e0e0" }}
+      sx={{ borderBottom: "1px solid", borderBottomColor: "divider" }}
     >
-      <Box sx={{ textAlign: "center", py: 4 }}>
-        <Typography
-          variant="h2"
-          component="h1"
-          gutterBottom
-          sx={{ fontWeight: "bold", cursor: "pointer" }}
-        >
-          Welcome to ExpenseIt
+      <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <Typography variant="h1" sx={{ fontWeight: 900 }}>
+          EXPENSEIT
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}>
-          <Typography
-            component="a"
-            href="#features"
-            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}
-          >
-            Features
-          </Typography>
-          <Typography
-            component="a"
-            href="#pricing"
-            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}
-          >
-            Pricing
-          </Typography>
-          <Typography
-            component="a"
-            href="#about"
-            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}
-          >
-            About
-          </Typography>
-          <Box sx={{ ml: 2 }}>
-            <Button color="inherit" sx={{ fontWeight: "600" }} component={Link} to="/login">
-              Login
-            </Button>
-          </Box>
-        </Box>
+      </Link>
+      <Box
+        sx={{ display: "flex", alignItems: "center", gap: { xs: 1, sm: 3, md: 12 }, ml: "auto" }}
+      >
+        <Typography
+          component="a"
+          href="#features"
+          sx={{
+            cursor: "pointer",
+            fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+            "&:hover": { textDecoration: "underline" },
+          }}
+        >
+          Features
+        </Typography>
+        <Typography
+          component="a"
+          href="#pricing"
+          sx={{
+            cursor: "pointer",
+            fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+            "&:hover": { textDecoration: "underline" },
+          }}
+        >
+          Pricing
+        </Typography>
+        <Typography
+          component="a"
+          href="#about"
+          sx={{
+            cursor: "pointer",
+            fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+            "&:hover": { textDecoration: "underline" },
+          }}
+        >
+          About
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            fontWeight: "600",
+            fontSize: { xs: "0.875rem", sm: "1rem", md: "1.25rem" },
+            textTransform: "none",
+            px: { xs: 2, sm: 3, md: 4 },
+            py: { xs: 0.5, sm: 1, md: 1.5 },
+            backgroundColor: "primary.main",
+            "&:hover": { backgroundColor: "primary.dark" },
+          }}
+          component={Link}
+          to="/login"
+        >
+          Login
+        </Button>
       </Box>
-    </AppBarContainerCopy>
+    </AppBarContainer>
   );
 }

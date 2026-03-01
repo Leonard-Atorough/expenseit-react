@@ -1,6 +1,7 @@
 import { IconButton, Box, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { AppBarContainerCopy } from "../../common/AppBarContainer copy";
+import { Link } from "react-router";
+import { AppBarContainer } from "../../common/AppBarContainer";
 import { useAuthActions, useCurrentUser } from "../../../hooks/useAuth";
 
 export function AppHeader() {
@@ -11,20 +12,21 @@ export function AppHeader() {
     await action.logout();
   };
 
-  const innerContent = (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 2, zIndex: 10 }}>
-      <Typography variant="body1">
-        {user?.firstName} {user?.lastName}
-      </Typography>
-      <IconButton color="inherit" onClick={() => void handleLogout()}>
-        <LogoutIcon />
-      </IconButton>
-    </Box>
-  );
-
   return (
-    <AppBarContainerCopy brand="EXPENSEIT" pageTitle="Dashboard" position="static">
-      {innerContent}
-    </AppBarContainerCopy>
+    <AppBarContainer position="static">
+      <Link to="/app" style={{ textDecoration: "none", color: "inherit" }}>
+        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+          EXPENSEIT
+        </Typography>
+      </Link>
+      <Box sx={{ ml: "auto", display: "flex", alignItems: "center", gap: 2 }}>
+        <Typography variant="body2">
+          {user?.firstName} {user?.lastName}
+        </Typography>
+        <IconButton color="inherit" onClick={() => void handleLogout()} size="small">
+          <LogoutIcon fontSize="small" />
+        </IconButton>
+      </Box>
+    </AppBarContainer>
   );
 }
