@@ -2,7 +2,7 @@ import type { ApiConfig } from "../types";
 
 export const config: ApiConfig = {
   apiBaseUrl:
-    (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "http://localhost:8080/api",
+    (import.meta.env.VITE_BASE_API_URL as string | undefined) ?? "http://localhost:3001/api",
   endpoints: {
     auth: {
       login: "/auth/login",

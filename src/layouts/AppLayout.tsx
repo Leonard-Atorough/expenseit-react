@@ -1,20 +1,16 @@
-import { Box, Container } from "@mui/material";
-import { AppHeader, AppSidebar, DRAWER_WIDTH } from "../components/features/app";
-import { Outlet, useOutletContext } from "react-router";
-import { useState, useEffect, useCallback } from "react";
+import { Box } from "@mui/material";
+import { AppHeader, AppSidebar } from "../components/features/app";
+import { Outlet } from "react-router";
+import { useState, useCallback } from "react";
 import { useAuth } from "../hooks/useAuth";
 import type { Transaction } from "../models";
 
 export function AppLayout() {
   const API_BASE_URL = "http://localhost:4000/api";
   const TRANSACTIONS_ENDPOINT = `${API_BASE_URL}/transactions`;
-  const { setPage } = useOutletContext<{ setPage: (page: string | undefined) => void }>();
   const auth = useAuth();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-
-  useEffect(() => {
-    setPage(`${auth.user?.firstName}'s DASHBOARD`);
-  }, [setPage, auth.user?.firstName]);
+  const page = `${auth.user?.firstName}'s DASHBOARD`;
 
   useCallback(async () => {
     const transactions = await fetch(TRANSACTIONS_ENDPOINT, {
@@ -32,22 +28,20 @@ export function AppLayout() {
   }, [TRANSACTIONS_ENDPOINT, auth.accessToken]);
 
   return (
-    <Container>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <AppHeader />
-      <Box>
+      <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
         <AppSidebar />
         <Box
           sx={{
-            flexGrow: 1,
+            flex: 1,
             p: 3,
-            width: `calc(100% - ${DRAWER_WIDTH}px)`,
             overflowY: "auto",
-            height: "100%",
           }}
         >
-          <Outlet context={{ setPage, transactions }} />
+          <Outlet context={{ page, transactions }} />
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 }

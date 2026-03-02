@@ -2,11 +2,7 @@ import type { ApiResponse } from "../types";
 import { config } from "./config";
 
 export default class APIClient {
-  private static baseUrl: string;
-
-  constructor(baseUrl: string) {
-    APIClient.baseUrl = baseUrl;
-  }
+  private static baseUrl = config.apiBaseUrl;
 
   private static async request<T>(endpoint: string, options: RequestInit = {}) {
     const url = `${APIClient.baseUrl}${endpoint}`;
@@ -21,7 +17,7 @@ export default class APIClient {
         const error: ApiResponse<null> = (await response.json()) as ApiResponse<null>;
         // log to console for now.
         console.error(`API error: ${response.status} ${response.statusText}`, error);
-        throw new Error(error.message || "API request failed");
+        throw new Error(error.message ?? "API request failed");
       }
       return (await response.json()) as ApiResponse<T>;
     } catch (error) {

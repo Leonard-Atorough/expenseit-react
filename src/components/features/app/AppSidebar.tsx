@@ -40,16 +40,27 @@ export function AppSidebar({ menuItems }: AppSidebarProps) {
     <Drawer
       variant="permanent"
       sx={{
-        width: DRAWER_WIDTH,
+        width: "15%",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: DRAWER_WIDTH,
           boxSizing: "border-box",
-          mt: "64px", // Account for fixed AppBar
+          position: "relative",
+          height: "calc(100vh - 64px)",
+          top: "6px",
+          display: "flex",
+          flexDirection: "column",
         },
       }}
     >
-      <Box sx={{ overflow: "auto" }}>
+      <Box
+        sx={{
+          overflow: "auto",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
         <List>
           {items.map((item) => (
             <ListItem key={item.text} disablePadding>

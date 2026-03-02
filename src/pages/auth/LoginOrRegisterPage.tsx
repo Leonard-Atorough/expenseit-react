@@ -53,6 +53,7 @@ export function LoginOrRegisterPage() {
       const lastName = data.get("lastName") as string;
       void (async () => {
         try {
+          console.log("Attempting registration for:", email);
           await auth.register({ firstName, lastName, email, password });
           // Successful registration actions can be handled here, e.g., redirecting the user
           await navigate("/login");

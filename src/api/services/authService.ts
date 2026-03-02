@@ -1,4 +1,4 @@
-import type { loginCredentials, registerCredentials, userData } from "../../types";
+import type { loginCredentials, registerCredentials, userData, userDataWithToken } from "../../types";
 import APIClient from "../client";
 import { config } from "../config";
 
@@ -16,15 +16,15 @@ export async function registerUser(credentials: registerCredentials): Promise<us
 
 export async function loginUser(
   credentials: loginCredentials,
-): Promise<{ user: userData; accessToken: string }> {
-  const result = await APIClient.POST<{ user: userData; accessToken: string }, loginCredentials>(
+): Promise<userDataWithToken> {
+  const apiResponse = await APIClient.POST<userDataWithToken, loginCredentials>(
     config.endpoints.auth.login,
     credentials,
   );
-  if (!result.data) {
+  if (!apiResponse.data) {
     throw new Error("No user data returned from login");
   }
-  return result.data;
+  return apiResponse.data;
 }
 
 export async function getCurrentUser(token: string): Promise<userData> {

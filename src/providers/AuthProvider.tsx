@@ -1,7 +1,13 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 import type { loginCredentials, registerCredentials, userData } from "../types";
 import { AuthContext } from "../context/AuthContext";
-import { getCurrentUser, loginUser, logoutUser, refreshToken, registerUser } from "../api/services/authService";
+import {
+  getCurrentUser,
+  loginUser,
+  logoutUser,
+  refreshToken,
+  registerUser,
+} from "../api/services/authService";
 
 export interface authContextType {
   isLoggedIn: boolean;
@@ -16,21 +22,30 @@ export interface authContextType {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<userData | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      setIsLoading(true);
       try {
         const token = localStorage.getItem("accessToken");
 
         if (token && !isTokenExpired(token)) {
+          console.log("Valid token found, fetching user data...");
           setAccessToken(token);
-          setIsLoggedIn(true);
-          const user = await getCurrentUser(token);
-          setUser(user);
+          try {
+            const user = await getCurrentUser(token);
+            setUser(user);
+            setIsLoggedIn(true);
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            // Token exists but user data fetch failed - clear auth state
+            setIsLoggedIn(false);
+            setUser(null);
+            setAccessToken(null);
+            localStorage.removeItem("accessToken");
+          }
         } else {
           setIsLoggedIn(false);
           setUser(null);
@@ -39,6 +54,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       } catch (error) {
         console.error("Error checking auth status:", error);
+        setIsLoggedIn(false);
+        setUser(null);
+        setAccessToken(null);
       } finally {
         setIsLoading(false);
       }
@@ -56,10 +74,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       try {
         const data = await loginUser(credentials);
-        setUser(data.user);
+        const token = data.token;
+        if (!token) {
+          throw new Error("No access token returned from login");
+        }
+        const user = data as userData;
 
-        localStorage.setItem("accessToken", data.accessToken);
-        setAccessToken(data.accessToken);
+        localStorage.setItem("accessToken", token);
+        setAccessToken(token);
+        setUser(user);
 
         setIsLoggedIn(true);
       } catch (error) {
@@ -75,12 +98,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = useCallback(
     async (credentials: registerCredentials) => {
       if (isLoggedIn) return;
-
       setIsLoading(true);
 
       try {
         const data = await registerUser(credentials);
-
         setUser(data);
       } catch (error) {
         console.error(

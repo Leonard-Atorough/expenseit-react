@@ -9,6 +9,7 @@ import { ProtectedRoute } from "./components/common";
 import { Dashboard, Transactions, Reports, Settings } from "./components/features/app";
 import { LandingPage, LoginOrRegisterPage } from "./pages";
 import { AuthLayout, AppLayout, PublicLayout } from "./layouts";
+import AuthProvider from "./providers/AuthProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,8 +42,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ThemeProvider>
   </StrictMode>,
 );
