@@ -32,7 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const token = localStorage.getItem("accessToken");
 
         if (token && !isTokenExpired(token)) {
-          console.log("Valid token found, fetching user data...");
           setAccessToken(token);
           try {
             const user = await getCurrentUser(token);
@@ -51,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(null);
           setAccessToken(null);
           localStorage.removeItem("accessToken");
+          // Define a refresh callback to attempt token refresh if needed
         }
       } catch (error) {
         console.error("Error checking auth status:", error);

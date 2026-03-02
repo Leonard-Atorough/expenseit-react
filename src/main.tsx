@@ -6,8 +6,8 @@ import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme/index.ts";
 import { CssBaseline } from "@mui/material";
 import { ProtectedRoute } from "./components/common";
-import { Dashboard, Transactions, Reports, Settings } from "./components/features/app";
-import { LandingPage, LoginOrRegisterPage } from "./pages";
+import { Transactions, Reports, Settings } from "./components/features/app";
+import { Dashboard, LandingPage, LoginOrRegisterPage } from "./pages";
 import { AuthLayout, AppLayout, PublicLayout } from "./layouts";
 import AuthProvider from "./providers/AuthProvider.tsx";
 
