@@ -43,7 +43,7 @@ export async function getCurrentUser(token: string): Promise<userData> {
 }
 
 export async function logoutUser(token: string): Promise<void> {
-  const result = await APIClient.POST<{ message: string }, null>(
+  await APIClient.POST<{ message: string }, null>(
     config.endpoints.auth.logout,
     null,
     {
@@ -53,10 +53,6 @@ export async function logoutUser(token: string): Promise<void> {
       },
     },
   );
-
-  if (!result.data) {
-    throw new Error("Logout failed");
-  }
 }
 
 export async function refreshToken(token: string): Promise<{ accessToken: string }> {

@@ -11,6 +11,8 @@ export default class APIClient {
       ...config.defaultHeaders,
     };
 
+    options.credentials = "include"; // Ensure cookies are sent with requests
+
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
