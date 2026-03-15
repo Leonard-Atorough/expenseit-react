@@ -1,4 +1,4 @@
-import type { ApiResponse } from "../types";
+import type { ApiResponse, ApiErrorResponse } from "../models";
 import { config } from "./config";
 
 export default class APIClient {
@@ -16,7 +16,7 @@ export default class APIClient {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        const error: ApiResponse<null> = (await response.json()) as ApiResponse<null>;
+        const error: ApiErrorResponse<string> = (await response.json()) as ApiErrorResponse<string>;
         // log to console for now.
         console.error(`API error: ${response.status} ${response.statusText}`, error);
         throw new Error(error.message ?? "API request failed");

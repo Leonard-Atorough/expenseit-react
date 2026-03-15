@@ -1,4 +1,26 @@
-import type { ApiConfig } from "../types";
+interface ApiConfig {
+  apiBaseUrl: string;
+  endpoints: {
+    auth: {
+      login: string;
+      register: string;
+      me: string;
+      logout: string;
+      refresh: string;
+    };
+    user: {
+      profile: string;
+    };
+    transaction: {
+      list: string;
+      create: string;
+      get: (id: string) => string;
+      update: (id: string) => string;
+      delete: (id: string) => string;
+    };
+  };
+  defaultHeaders: Record<string, string>;
+}
 
 export const config: ApiConfig = {
   apiBaseUrl:

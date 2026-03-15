@@ -1,9 +1,10 @@
-import type { loginCredentials, registerCredentials, userData, userDataWithToken } from "../../types";
+import type { userData, userDataWithToken } from "../../types";
 import APIClient from "../client";
 import { config } from "../config";
+import type { LoginData, RegisterData } from "../schemas";
 
-export async function registerUser(credentials: registerCredentials): Promise<userData> {
-  const result = await APIClient.POST<userData, registerCredentials>(
+export async function registerUser(credentials: RegisterData): Promise<userData> {
+  const result = await APIClient.POST<userData, RegisterData>(
     config.endpoints.auth.register,
     credentials,
   );
@@ -15,9 +16,9 @@ export async function registerUser(credentials: registerCredentials): Promise<us
 }
 
 export async function loginUser(
-  credentials: loginCredentials,
+  credentials: LoginData,
 ): Promise<userDataWithToken> {
-  const apiResponse = await APIClient.POST<userDataWithToken, loginCredentials>(
+  const apiResponse = await APIClient.POST<userDataWithToken, LoginData>(
     config.endpoints.auth.login,
     credentials,
   );
