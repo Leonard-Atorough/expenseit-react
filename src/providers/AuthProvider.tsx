@@ -50,7 +50,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(null);
           setAccessToken(null);
           localStorage.removeItem("accessToken");
-          // Define a refresh callback to attempt token refresh if needed
+          // If token is expired, try to refresh it
+          await refreshAuthToken(token);
         }
       } catch (error) {
         console.error("Error checking auth status:", error);
@@ -172,6 +173,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
+
+  async function refreshAuthToken(token: string | null) {
+    try {
+      const data = await refreshToken(token!);
+      localStorage.setItem("accessToken", data.accessToken);
+      setAccessToken(data.accessToken);
+      const user = await getCurrentUser(data.accessToken);
+      setUser(user);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+      setIsLoggedIn(false);
+      setUser(null);
+      setAccessToken(null);
+      localStorage.removeItem("accessToken");
+    }
+  }
 }
 
 function isTokenExpired(token: string): boolean {
