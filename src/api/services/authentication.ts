@@ -1,10 +1,15 @@
-import type { userData, userDataWithToken } from "../../types";
 import APIClient from "../client";
 import { config } from "../config";
-import type { LoginData, RegisterData } from "../schemas";
+import type {
+  LoginData,
+  RegisterData,
+  RegisterResponse,
+  LoginResponse,
+  UserResponse,
+} from "../schemas";
 
-export async function registerUser(credentials: RegisterData): Promise<userData> {
-  const result = await APIClient.POST<userData, RegisterData>(
+export async function registerUser(credentials: RegisterData): Promise<RegisterResponse> {
+  const result = await APIClient.POST<RegisterResponse, RegisterData>(
     config.endpoints.auth.register,
     credentials,
   );
@@ -15,10 +20,8 @@ export async function registerUser(credentials: RegisterData): Promise<userData>
   return result.data;
 }
 
-export async function loginUser(
-  credentials: LoginData,
-): Promise<userDataWithToken> {
-  const apiResponse = await APIClient.POST<userDataWithToken, LoginData>(
+export async function loginUser(credentials: LoginData): Promise<LoginResponse> {
+  const apiResponse = await APIClient.POST<LoginResponse, LoginData>(
     config.endpoints.auth.login,
     credentials,
   );
@@ -28,8 +31,8 @@ export async function loginUser(
   return apiResponse.data;
 }
 
-export async function getCurrentUser(token: string): Promise<userData> {
-  const result = await APIClient.GET<userData>(config.endpoints.auth.me, {
+export async function getCurrentUser(token: string): Promise<UserResponse> {
+  const result = await APIClient.GET<UserResponse>(config.endpoints.auth.me, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -44,16 +47,12 @@ export async function getCurrentUser(token: string): Promise<userData> {
 }
 
 export async function logoutUser(token: string): Promise<void> {
-  await APIClient.POST<{ message: string }, null>(
-    config.endpoints.auth.logout,
-    null,
-    {
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  await APIClient.POST<{ message: string }, null>(config.endpoints.auth.logout, null, {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 }
 
 export async function refreshToken(token: string): Promise<{ accessToken: string }> {

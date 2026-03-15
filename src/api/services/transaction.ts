@@ -1,7 +1,7 @@
 import type { Transaction } from "../../models";
 import APIClient from "../client";
 import { config } from "../config";
-import type { CreateTransactionData } from "../schemas";
+import type { CreateTransactionData, UpdateTransactionData } from "../schemas";
 
 async function getTransactions(token: string): Promise<Transaction[]> {
   const result = await APIClient.GET<Transaction[]>(config.endpoints.transaction.list, {
@@ -48,10 +48,10 @@ async function createTransaction(
 
 async function updateTransaction(
   id: string,
-  transactionData: Partial<CreateTransactionData>,
+  transactionData: UpdateTransactionData,
   token: string,
 ): Promise<Transaction> {
-  const result = await APIClient.PUT<Transaction, Partial<CreateTransactionData>>(
+  const result = await APIClient.PUT<Transaction, UpdateTransactionData>(
     config.endpoints.transaction.update(id),
     transactionData,
     {
