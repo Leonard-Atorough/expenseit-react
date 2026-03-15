@@ -73,7 +73,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (isLoggedIn) return;
 
       setIsLoading(true);
-
       try {
         const data = await loginUser(credentials);
         const token = data.token;

@@ -40,12 +40,10 @@ export default function LoginOrRegisterPage() {
         try {
           console.log("Attempting login for:", email);
           await auth.login({ email, password });
-          // Successful login actions can be handled here, e.g., redirecting the user
-          await navigate("/app/dashboard");
+          Promise.resolve(navigate("/app/dashboard")).catch(console.log); // weird but we need to catch this to avoid unhandled promise rejection warning
         } catch (error) {
           console.error("Login error:", error);
           displayErrorForTime(error instanceof Error ? error.message : String(error), 5000);
-          // Optionally, display an error message to the user
         }
       })();
     } else {
@@ -55,11 +53,12 @@ export default function LoginOrRegisterPage() {
         try {
           console.log("Attempting registration for:", email);
           await auth.register({ firstName, lastName, email, password });
-          // Successful registration actions can be handled here, e.g., redirecting the user
-          await navigate("/login");
+
+          await auth.login({ email, password });
+          Promise.resolve(navigate("/app/dashboard")).catch(console.log);
         } catch (error) {
           console.error("Registration error:", error);
-          // Optionally, display an error message to the user
+          displayErrorForTime(error instanceof Error ? error.message : String(error), 5000);
         }
       })();
     }

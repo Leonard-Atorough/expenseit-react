@@ -24,7 +24,7 @@ interface ApiConfig {
 
 export const config: ApiConfig = {
   apiBaseUrl:
-    (import.meta.env.VITE_BASE_API_URL as string | undefined) ?? "http://localhost:3001/api",
+    (import.meta.env.VITE_BASE_API_URL as string | undefined) ?? "http://localhost:4000/api",
   endpoints: {
     auth: {
       login: "/auth/login",

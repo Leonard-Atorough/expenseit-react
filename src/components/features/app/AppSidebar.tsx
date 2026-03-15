@@ -11,7 +11,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-export const DRAWER_WIDTH = 240;
+export const DRAWER_WIDTH = " 240px";
 
 interface MenuItem {
   text: string;
@@ -40,7 +40,8 @@ export function AppSidebar({ menuItems }: AppSidebarProps) {
     <Drawer
       variant="permanent"
       sx={{
-        width: "15%",
+        width: DRAWER_WIDTH,
+        py: 2,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           boxSizing: "border-box",

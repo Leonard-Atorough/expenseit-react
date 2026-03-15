@@ -1,6 +1,6 @@
-import Box from "@mui/material/Box";
 import { useCurrentUser } from "../../hooks/useAuth";
 import { RecentTransactions, SummaryRow, WelcomeMessage } from "../../components";
+import Paper from "@mui/material/Paper";
 
 export default function Dashboard() {
   const user = useCurrentUser();
@@ -18,12 +18,12 @@ export default function Dashboard() {
      */
   //Declare uniimplemented components
   return (
-    <Box>
+    <Paper elevation={1} sx={{ p: 4, height: "100%" }}>
       <WelcomeMessage user={user} />
       <SummaryRow />
       <RecentTransactions />
       {/* <MonthlyTrends />
         <BudgetOverview /> */}
-    </Box>
+    </Paper>
   );
 }
