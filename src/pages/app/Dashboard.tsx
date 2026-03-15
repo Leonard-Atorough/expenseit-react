@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useCurrentUser } from "../../hooks/useAuth";
 import { RecentTransactions, SummaryRow, WelcomeMessage } from "../../components";
 
-export function Dashboard() {
+export default function Dashboard() {
   const user = useCurrentUser();
   /*
     Dashboard content layout plan:
@@ -19,7 +19,7 @@ export function Dashboard() {
   //Declare uniimplemented components
   return (
     <Box>
-      <WelcomeMessage user={user!} />
+      <WelcomeMessage user={user} />
       <SummaryRow />
       <RecentTransactions />
       {/* <MonthlyTrends />

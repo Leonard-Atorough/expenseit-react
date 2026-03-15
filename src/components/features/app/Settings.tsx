@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useAuth } from "../../../hooks/useAuth";
 
-export function Settings() {
+export default function Settings() {
   const { user } = useAuth();
 
   return (

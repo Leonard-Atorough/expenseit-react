@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import type { Transaction } from "../../../models/transactions";
 
-export function Transactions({ transactions }: { transactions: Transaction[] }) {
+export default function Transactions({ transactions }: { transactions: Transaction[] }) {
   return (
     <Container maxWidth="lg">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>

@@ -1,15 +1,20 @@
 import "./App.css";
-import { StrictMode } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme/index.ts";
-import { CssBaseline } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import CircularProgress from "@mui/material/CircularProgress";
 import { ProtectedRoute } from "./components/common";
-import { Transactions, Reports, Settings } from "./components/features/app";
-import { Dashboard, LandingPage, LoginOrRegisterPage } from "./pages";
+import { LandingPage, LoginOrRegisterPage } from "./pages";
 import { AuthLayout, AppLayout, PublicLayout } from "./layouts";
 import AuthProvider from "./providers/AuthProvider.tsx";
+
+const Dashboard = lazy(() => import("./pages/app/Dashboard.tsx"));
+const Transactions = lazy(() => import("./components/features/app/Transactions.tsx"));
+const Reports = lazy(() => import("./components/features/app/Reports.tsx"));
+const Settings = lazy(() => import("./components/features/app/Settings.tsx"));
 
 const router = createBrowserRouter([
   {
@@ -25,9 +30,11 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: (
-      <ProtectedRoute>
-        <AppLayout />
-      </ProtectedRoute>
+      <Suspense fallback={<CircularProgress />}>
+        <ProtectedRoute>
+          <AppLayout />
+        </ProtectedRoute>
+      </Suspense>
     ),
     children: [
       { index: true, element: <Dashboard /> },

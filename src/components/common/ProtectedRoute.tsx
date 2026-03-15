@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
-import { CircularProgress, Box } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isLoggedIn, isLoading } = useAuth();
@@ -20,6 +21,6 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
       </Box>
     );
   }
-  
+
   return <>{children}</>;
 }

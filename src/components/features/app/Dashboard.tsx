@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { useAuth } from "../../../hooks/useAuth";
 
-export function Dashboard() {
+export default function Dashboard() {
   const { user } = useAuth();
 
   return (
@@ -17,7 +17,11 @@ export function Dashboard() {
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" color="text.secondary" sx={{ textTransform: "uppercase", fontSize: "12px" }}>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              sx={{ textTransform: "uppercase", fontSize: "12px" }}
+            >
               Total Balance
             </Typography>
             <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>
@@ -27,7 +31,11 @@ export function Dashboard() {
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" color="text.secondary" sx={{ textTransform: "uppercase", fontSize: "12px" }}>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              sx={{ textTransform: "uppercase", fontSize: "12px" }}
+            >
               This Month
             </Typography>
             <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>
@@ -37,7 +45,11 @@ export function Dashboard() {
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" color="text.secondary" sx={{ textTransform: "uppercase", fontSize: "12px" }}>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              sx={{ textTransform: "uppercase", fontSize: "12px" }}
+            >
               Transactions
             </Typography>
             <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>

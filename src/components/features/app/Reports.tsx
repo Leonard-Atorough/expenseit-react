@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
-export function Reports() {
+export default function Reports() {
   return (
     <Container maxWidth="lg">
       <Typography variant="h3" gutterBottom>
