@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import type { loginCredentials, registerCredentials, userData } from "../types";
+
 import { AuthContext } from "../context/AuthContext";
 import {
   getCurrentUser,
@@ -8,14 +8,15 @@ import {
   refreshToken,
   registerUser,
 } from "../api/services/authentication";
+import type { LoginData, RegisterData, UserResponse } from "../api/schemas";
 
 export interface authContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
-  user: userData | null;
+  user: UserResponse | null;
   accessToken: string | null;
-  login: (credentials: loginCredentials) => Promise<void>;
-  register: (credentials: registerCredentials) => Promise<void>;
+  login: (credentials: LoginData) => Promise<void>;
+  register: (credentials: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
 }
@@ -23,7 +24,7 @@ export interface authContextType {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<userData | null>(null);
+  const [user, setUser] = useState<UserResponse | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Things we need to implement: login, register, logout functions
   const login = useCallback(
-    async (credentials: loginCredentials) => {
+    async (credentials: LoginData) => {
       if (isLoggedIn) return;
 
       setIsLoading(true);
@@ -79,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!token) {
           throw new Error("No access token returned from login");
         }
-        const user = data as userData;
+        const user = data as UserResponse;
 
         localStorage.setItem("accessToken", token);
         setAccessToken(token);
@@ -97,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const register = useCallback(
-    async (credentials: registerCredentials) => {
+    async (credentials: RegisterData) => {
       if (isLoggedIn) return;
       setIsLoading(true);
 

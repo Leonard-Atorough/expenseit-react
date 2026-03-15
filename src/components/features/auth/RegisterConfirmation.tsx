@@ -1,9 +1,6 @@
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
 import Paper from "@mui/material/Paper";
 
 export function RegisterConfirmation() {
