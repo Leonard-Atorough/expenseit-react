@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
-import type { Transaction } from "../../../models/TransactionModel";
+import type { Transaction } from "../../../models/transactions";
 
 export function Transactions({ transactions }: { transactions: Transaction[] }) {
   return (

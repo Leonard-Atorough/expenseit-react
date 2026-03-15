@@ -14,6 +14,13 @@ export const config: ApiConfig = {
     user: {
       profile: "/user/profile",
     },
+    transaction: {
+      list: "/transactions",
+      create: "/transactions",
+      get: (id: string) => `/transactions/${id}`,
+      update: (id: string) => `/transactions/${id}`,
+      delete: (id: string) => `/transactions/${id}`,
+    },
   },
   defaultHeaders: {
     "Content-Type": "application/json",

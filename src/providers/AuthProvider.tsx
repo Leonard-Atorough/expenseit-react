@@ -7,7 +7,7 @@ import {
   logoutUser,
   refreshToken,
   registerUser,
-} from "../api/services/authService";
+} from "../api/services/authentication";
 
 export interface authContextType {
   isLoggedIn: boolean;

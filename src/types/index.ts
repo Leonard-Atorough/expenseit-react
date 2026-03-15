@@ -42,6 +42,13 @@ export interface ApiConfig {
     user: {
       profile: string;
     };
+    transaction: {
+      list: string;
+      create: string;
+      get: (id: string) => string;
+      update: (id: string) => string;
+      delete: (id: string) => string;
+    };
   };
   defaultHeaders: Record<string, string>;
 }
