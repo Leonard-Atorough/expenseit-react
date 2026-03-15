@@ -5,7 +5,7 @@ import { useNavigate, useOutletContext } from "react-router";
 import { ErrorAlert } from "../../components/common";
 import { LoginForm } from "../../components/features/auth";
 
-export function LoginOrRegisterPage() {
+export default function LoginOrRegisterPage() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

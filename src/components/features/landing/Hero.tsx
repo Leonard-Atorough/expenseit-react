@@ -8,7 +8,7 @@ import heroBg from "../../../assets/hero.svg";
 export function Hero() {
   // Hero section props
   const props = {
-    title: "Welcome to ExpenseIt",
+    title: "Expenseit - Your Personal Money Tracker",
     subtitle:
       "Join us today and take control of your finances! Manage your expenses effortlessly and stay on top of your budget.",
     bgImage: heroBg,
@@ -24,20 +24,20 @@ export function Hero() {
           py: 8,
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-end",
-          justifyContent: "flex-start",
+          alignItems: "center",
           minHeight: "100vh",
           backgroundImage: `url(${props.bgImage})`,
           backgroundSize: "cover",
           backgroundPosition: "0% 50%",
+          boxShadow: "inset 0 0 0 1000px rgba(255, 255, 255, 0.2), inset 0 -200px 50px -50px rgba(255, 255, 255, 0.5)",
         }}
       >
-        <Stack spacing={4} mb={4} alignItems="flex-end">
+        <Stack spacing={4} mb={4} alignItems="center">
           <Typography
             variant="h1"
             component="h2"
             gutterBottom
-            sx={{ fontSize: { xs: "2rem", sm: "3rem", md: "5rem" } }}
+            sx={{ fontSize: { xs: "2rem", sm: "3rem", md: "6rem" }, textAlign: "center" }}
           >
             {props.title}
           </Typography>

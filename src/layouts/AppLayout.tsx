@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { AppHeader, AppSidebar } from "../components/features/app";
 import { Outlet } from "react-router";
 import { useState, useCallback } from "react";

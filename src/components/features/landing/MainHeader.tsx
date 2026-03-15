@@ -1,4 +1,6 @@
-import { Box, Typography, Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import { Link } from "react-router";
 import { AppBarContainer } from "../../common/AppBarContainer";
 

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { useCurrentUser } from "../../hooks/useAuth";
 import { RecentTransactions, SummaryRow, WelcomeMessage } from "../../components";
 

@@ -7,11 +7,13 @@ import { theme } from "./theme/index.ts";
 import CssBaseline from "@mui/material/CssBaseline";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ProtectedRoute } from "./components/common";
-import { LandingPage, LoginOrRegisterPage } from "./pages";
 import { AuthLayout, AppLayout, PublicLayout } from "./layouts";
 import AuthProvider from "./providers/AuthProvider.tsx";
 
+const LandingPage = lazy(() => import("./pages/public/LandingPage.tsx"));
+const LoginOrRegisterPage = lazy(() => import("./pages/auth/LoginOrRegisterPage.tsx"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard.tsx"));
+
 const Transactions = lazy(() => import("./components/features/app/Transactions.tsx"));
 const Reports = lazy(() => import("./components/features/app/Reports.tsx"));
 const Settings = lazy(() => import("./components/features/app/Settings.tsx"));
@@ -20,12 +22,30 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <PublicLayout />,
-    children: [{ index: true, element: <LandingPage /> }],
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <LandingPage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: "/login",
     element: <AuthLayout />,
-    children: [{ index: true, element: <LoginOrRegisterPage /> }],
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <LoginOrRegisterPage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: "/app",

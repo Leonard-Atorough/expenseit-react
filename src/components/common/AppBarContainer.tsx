@@ -1,4 +1,5 @@
-import {  type SxProps, type Theme, AppBar as MuiAppBar } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import type { Theme, SxProps } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import type { ReactNode } from "react";
 
@@ -19,7 +20,7 @@ interface AppBarContainerProps {
  */
 export function AppBarContainer({ position = "sticky", children, sx }: AppBarContainerProps) {
   return (
-    <MuiAppBar
+    <AppBar
       position={position}
       elevation={1}
       sx={{
@@ -41,6 +42,6 @@ export function AppBarContainer({ position = "sticky", children, sx }: AppBarCon
       >
         {children}
       </Toolbar>
-    </MuiAppBar>
+    </AppBar>
   );
 }

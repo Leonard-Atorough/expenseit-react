@@ -1,4 +1,4 @@
-import Card from "@mui/material/Card";
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -26,7 +26,7 @@ export function Features() {
         <Typography variant="h2" component="h2" gutterBottom align="center">
           Features
         </Typography>
-        <Typography variant="h5" component="h3" color="text.secondary" align="center">
+        <Typography variant="h1" component="h3" color="text.secondary" align="center">
           Explore the powerful features that make ExpenseIt your go-to solution for managing
           personal finances.
         </Typography>
@@ -48,32 +48,23 @@ export function Features() {
           justifyContent="center"
           gap={4}
         >
-          <Card
-            sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }}
-            elevation={3}
-          >
+          <Paper sx={{ minWidth: 275, p: 3, mb: 4 }} elevation={3}>
             <Typography variant="h5" component="h3" gutterBottom>
               Expense Tracking
             </Typography>
             <Typography variant="body1" color="text.secondary" mb={4}>
               Track your income and expenses effortlessly to stay on top of your financial health.
             </Typography>
-          </Card>
-          <Card
-            sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }}
-            elevation={3}
-          >
+          </Paper>
+          <Paper sx={{ minWidth: 275, p: 3, mb: 4 }} elevation={3}>
             <Typography variant="h5" component="h3" gutterBottom>
               Analytics and Charts
             </Typography>
             <Typography variant="body1" color="text.secondary" mb={4}>
               Visualize your spending patterns with interactive charts and detailed analytics.
             </Typography>
-          </Card>
-          <Card
-            sx={{ minWidth: 275, p: 3, mb: 4, backgroundColor: "background.default" }}
-            elevation={3}
-          >
+          </Paper>
+          <Paper sx={{ minWidth: 275, p: 3, mb: 4 }} elevation={3}>
             <Typography variant="h5" component="h3" gutterBottom>
               Budgeting Tools
             </Typography>
@@ -81,7 +72,7 @@ export function Features() {
               Set budgets and financial goals to manage your money effectively and achieve your
               objectives.
             </Typography>
-          </Card>
+          </Paper>
         </Grid>
       </Grid>
     </Box>

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { MainHeader } from "../components/features/landing/MainHeader";
 import { Outlet } from "react-router";
 import { useState } from "react";
