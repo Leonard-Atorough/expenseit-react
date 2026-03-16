@@ -5,6 +5,7 @@ export interface Transaction {
   date: string;
   category: string;
   description?: string;
+  type: "income" | "expense";
   createdAt: string;
   updatedAt: string;
 }

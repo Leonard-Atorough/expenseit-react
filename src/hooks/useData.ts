@@ -20,7 +20,7 @@ export function useData(): DataContextType {
  * Provides functions to add, update, delete, and fetch transactions.
  * @returns An object containing transaction action functions.
  */
-export function useDataActions() {
+export function useTransactionActions() {
   const {
     addTransaction,
     updateTransaction,

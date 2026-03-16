@@ -10,9 +10,10 @@ interface LoginFormProps {
   isLoginMode: boolean;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onToggleMode: () => void;
+  isLoading: boolean;
 }
 
-export function LoginForm({ isLoginMode, onSubmit, onToggleMode }: LoginFormProps) {
+export function LoginForm({ isLoginMode, onSubmit, onToggleMode, isLoading }: LoginFormProps) {
   return (
     <Paper elevation={3} sx={{ p: 4, mt: 8 }}>
       <Box display="flex" flexDirection="column" alignItems="center">
@@ -56,8 +57,21 @@ export function LoginForm({ isLoginMode, onSubmit, onToggleMode }: LoginFormProp
               />
             </Grid>
             <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
-              <Button type="submit" fullWidth variant="contained" color="primary" size="large">
-                {isLoginMode ? "Login" : "Register"}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="large"
+                disabled={isLoading}
+              >
+                {isLoading
+                  ? isLoginMode
+                    ? "Logging in..."
+                    : "Registering..."
+                  : isLoginMode
+                    ? "Login"
+                    : "Register"}
               </Button>
             </Grid>
             <Grid size={{ xs: 12 }}>

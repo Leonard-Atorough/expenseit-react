@@ -71,6 +71,7 @@ export default function LoginOrRegisterPage() {
         isLoginMode={isLoginMode}
         onSubmit={handleSubmit}
         onToggleMode={() => setIsLoginMode(!isLoginMode)}
+        isLoading={auth.isLoading}
       />
     </Container>
   );

@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { ProtectedRoute } from "./components/common";
 import { AuthLayout, AppLayout, PublicLayout } from "./layouts";
 import AuthProvider from "./providers/AuthProvider.tsx";
+import DataProvider from "./providers/DataProvider.tsx";
 
 const LandingPage = lazy(() => import("./pages/public/LandingPage.tsx"));
 const LoginOrRegisterPage = lazy(() => import("./pages/auth/LoginOrRegisterPage.tsx"));
@@ -69,8 +70,10 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <CssBaseline />
-        <RouterProvider router={router} />
+        <DataProvider>
+          <CssBaseline />
+          <RouterProvider router={router} />
+        </DataProvider>
       </AuthProvider>
     </ThemeProvider>
   </StrictMode>,

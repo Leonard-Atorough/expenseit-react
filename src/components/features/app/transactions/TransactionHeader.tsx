@@ -2,7 +2,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function TransactionHeader() {
+export interface TransactionHeaderProps {
+  onAddTransaction: () => void;
+}
+
+
+export default function TransactionHeader({ onAddTransaction }: TransactionHeaderProps) {
     return (
               <>
               <Box mb={4} display="flex" alignItems="flex-start" justifyContent="space-between">
@@ -15,7 +20,7 @@ export default function TransactionHeader() {
                 </Typography>
             </Box>
             <Box>
-                <Button variant="contained" color="primary" sx={{ ml: 2 }}>
+                <Button variant="contained" color="primary" sx={{ ml: 2 }} onClick={onAddTransaction}>
                     Add Transaction
                 </Button>
                 <Button variant="outlined" color="primary" sx={{ ml: 2 }}>

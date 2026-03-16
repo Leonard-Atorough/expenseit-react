@@ -7,7 +7,7 @@ export const CreateTransactionSchema = z.object({
     message: "Invalid date format",
   }),
   category: z.string(),
-  // userId will be set on the server side, so we don't include it in the schema for client input
+  type: z.enum(["income", "expense"]),
 });
 
 export const UpdateTransactionSchema = z.object({
@@ -20,6 +20,7 @@ export const UpdateTransactionSchema = z.object({
     })
     .optional(),
   category: z.string().optional(),
+  type: z.enum(["income", "expense"]).optional(),
 });
 
 export type CreateTransactionData = z.infer<typeof CreateTransactionSchema>;

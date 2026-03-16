@@ -89,6 +89,12 @@ export default function DataProvider({ children }: { children: React.ReactNode }
     }
   }, []);
 
+  useEffect(() => {
+    void (async () => {
+      await listTransactions();
+    })();
+  }, [listTransactions]);
+
   return (
     <DataContext.Provider
       value={{
