@@ -58,7 +58,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: "dashboard", element: <Dashboard /> },
-      { path: "transactions", element: <Transactions transactions={[]} /> },
+      { path: "transactions", element: <Transactions /> },
       { path: "reports", element: <Reports /> },
       { path: "settings", element: <Settings /> },
     ],
