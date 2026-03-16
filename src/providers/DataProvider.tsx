@@ -9,19 +9,11 @@ import {
   updateTransaction as apiUpdateTransaction,
   deleteTransaction as apiDeleteTransaction,
 } from "../api/services/transaction";
-import { useAuth } from "../hooks/useAuth";
-import { setTokenProvider } from "../api/client";
 
 export default function DataProvider({ children }: { children: React.ReactNode }) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const auth = useAuth();
-
-  useEffect(() => {
-    setTokenProvider(() => auth.accessToken ?? null);
-  }, [auth.accessToken]);
 
   const addTransaction = useCallback(async (transaction: CreateTransactionData) => {
     try {
@@ -67,9 +59,18 @@ export default function DataProvider({ children }: { children: React.ReactNode }
       setIsLoading(true);
       setError(null);
       const data = await fetchTransactions();
+      
+      // Guard: ensure data is an array
+      if (!Array.isArray(data)) {
+        console.warn("Expected fetchTransactions to return an array, got:", data);
+        setTransactions([]);
+        return;
+      }
+      
       setTransactions(data);
     } catch (err) {
       setError((err as Error).message);
+      console.error("Error fetching transactions:", err);
     } finally {
       setIsLoading(false);
     }

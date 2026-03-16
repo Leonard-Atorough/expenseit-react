@@ -7,16 +7,13 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { useTransactions } from "../../../../hooks/useData";
+import Box from "@mui/material/Box";
 
 export default function TransactionTable() {
-  const transactions = useTransactions();
+  const transactions = useTransactions() || [];
 
   return (
-    <Paper
-      elevation={5}
-      sx={{ p: 3 }}
-      style={{ maxHeight: "400px", overflowY: "auto", width: "100%" }}
-    >
+    <Box sx={{ p: 3 }} style={{ maxHeight: "400px", overflowY: "auto", width: "100%" }}>
       {transactions.length === 0 ? (
         <Typography color="text.secondary" textAlign="center">
           No transactions yet
@@ -55,6 +52,6 @@ export default function TransactionTable() {
           </Table>
         </TableContainer>
       )}
-    </Paper>
+    </Box>
   );
 }

@@ -8,7 +8,17 @@ async function fetchTransactions(): Promise<Transaction[]> {
   if (!result.ok) {
     throw new Error(result.message ?? "Failed to fetch transactions");
   }
-  return result.data!;
+
+  // Guard: handle cases where data might be wrapped or in an unexpected format
+  const data = result.data;
+
+  // Ensure data is an array; fallback to empty array
+  if (!Array.isArray(data)) {
+    console.warn("fetchTransactions: expected array, got:", data);
+    return [];
+  }
+
+  return data;
 }
 
 async function fetchTransactionById(id: string): Promise<Transaction> {

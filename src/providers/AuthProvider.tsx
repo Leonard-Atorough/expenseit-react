@@ -9,6 +9,7 @@ import {
   registerUser,
 } from "../api/services/authentication";
 import type { LoginData, RegisterData, UserResponse } from "../api/schemas";
+import { tokenManager } from "../api/tokenManager";
 
 export interface authContextType {
   isLoggedIn: boolean;
@@ -27,13 +28,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserResponse | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
+  // Sync token to token manager whenever it changes
+  useEffect(() => {
+    tokenManager.setToken(accessToken);
+  }, [accessToken]);
+
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
         const token = localStorage.getItem("accessToken");
 
         if (token && !isTokenExpired(token)) {
+          // Sync token to tokenManager immediately (don't wait for state updates)
+          tokenManager.setToken(token);
           setAccessToken(token);
+          console.log("token found in localStorage:", token);
           try {
             const user = await getCurrentUser(token);
             setUser(user);
@@ -41,21 +50,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           } catch (error) {
             console.error("Error fetching user data:", error);
             // Token exists but user data fetch failed - clear auth state
+            tokenManager.setToken(null);
             setIsLoggedIn(false);
             setUser(null);
             setAccessToken(null);
             localStorage.removeItem("accessToken");
           }
         } else {
-          setIsLoggedIn(false);
-          setUser(null);
-          setAccessToken(null);
-          localStorage.removeItem("accessToken");
-          // If token is expired, try to refresh it
-          await refreshAuthToken(token);
+          // Token missing or expired
+          if (token && isTokenExpired(token)) {
+            console.warn("Token expired, attempting refresh...");
+            await refreshAuthToken(token);
+          } else {
+            tokenManager.setToken(null);
+            setIsLoggedIn(false);
+            setUser(null);
+            setAccessToken(null);
+            localStorage.removeItem("accessToken");
+          }
         }
       } catch (error) {
         console.error("Error checking auth status:", error);
+        tokenManager.setToken(null);
         setIsLoggedIn(false);
         setUser(null);
         setAccessToken(null);
@@ -81,9 +97,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const user = data as UserResponse;
 
         localStorage.setItem("accessToken", token);
+        tokenManager.setToken(token); // Sync immediately, don't wait for state effect
         setAccessToken(token);
         setUser(user);
-
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Login failed:", error instanceof Error ? error.message : String(error));
@@ -128,6 +144,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw error;
     } finally {
       setIsLoading(false);
+      tokenManager.setToken(null); // Sync immediately
       setUser(null);
       localStorage.removeItem("accessToken");
       setAccessToken(null);
@@ -144,6 +161,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await refreshToken(accessToken!);
 
       localStorage.setItem("accessToken", data.accessToken);
+      tokenManager.setToken(data.accessToken); // Sync immediately
       setAccessToken(data.accessToken);
     } catch (error) {
       console.error(
@@ -177,12 +195,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const data = await refreshToken(token!);
       localStorage.setItem("accessToken", data.accessToken);
+      tokenManager.setToken(data.accessToken); // Sync immediately
       setAccessToken(data.accessToken);
       const user = await getCurrentUser(data.accessToken);
       setUser(user);
       setIsLoggedIn(true);
     } catch (error) {
       console.error("Error refreshing token:", error);
+      tokenManager.setToken(null); // Sync immediately on error
       setIsLoggedIn(false);
       setUser(null);
       setAccessToken(null);
