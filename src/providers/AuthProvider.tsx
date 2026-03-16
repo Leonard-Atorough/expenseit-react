@@ -67,7 +67,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void checkAuthStatus();
   }, []);
 
-  // Things we need to implement: login, register, logout functions
   const login = useCallback(
     async (credentials: LoginData) => {
       if (isLoggedIn) return;

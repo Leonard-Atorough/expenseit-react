@@ -1,6 +1,14 @@
 import type { ApiResponse, ApiErrorResponse } from "../models";
 import { config } from "./config";
 
+type TokenProvider = () => string | null;
+
+let tokenProvider: TokenProvider = () => null;
+
+export function setTokenProvider(fn: TokenProvider) {
+  tokenProvider = fn;
+}
+
 export default class APIClient {
   private static baseUrl = config.apiBaseUrl;
 
@@ -10,6 +18,17 @@ export default class APIClient {
       ...options.headers,
       ...config.defaultHeaders,
     };
+
+    // Attach token if provided by the token provider
+    try {
+      const token = tokenProvider?.();
+      if (token) {
+        options.headers = { ...options.headers, Authorization: `Bearer ${token}` };
+      }
+    } catch (err) {
+      // If token provider throws, just continue without Authorization header
+      console.warn("tokenProvider threw an error:", err);
+    }
 
     options.credentials = "include"; // Ensure cookies are sent with requests
 

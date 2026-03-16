@@ -13,10 +13,9 @@ import AuthProvider from "./providers/AuthProvider.tsx";
 const LandingPage = lazy(() => import("./pages/public/LandingPage.tsx"));
 const LoginOrRegisterPage = lazy(() => import("./pages/auth/LoginOrRegisterPage.tsx"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard.tsx"));
-
-const Transactions = lazy(() => import("./components/features/app/Transactions.tsx"));
-const Reports = lazy(() => import("./components/features/app/Reports.tsx"));
-const Settings = lazy(() => import("./components/features/app/Settings.tsx"));
+const Transactions = lazy(() => import("./pages/app/Transactions.tsx"));
+const Reports = lazy(() => import("./pages/app/Reports.tsx"));
+const Settings = lazy(() => import("./pages/app/Settings.tsx"));
 
 const router = createBrowserRouter([
   {
